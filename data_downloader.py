@@ -18,9 +18,11 @@ class Summary:
     peak_usage: Peak
 
 
-CACHED_DATA: Optional[Summary] = None
 CSV_DATA_URL = "https://www.tepco.co.jp/forecast/html/images/juyo-d1-j.csv"
 TZ_JAPAN_STANDARD_TIME = datetime.timezone(datetime.timedelta(seconds=60 * 60 * 9))
+
+# When you run this app on AWS Lambda, this cache does not work
+CACHED_DATA: Optional[Summary] = None
 
 
 def fetch_latest_data() -> Summary:
