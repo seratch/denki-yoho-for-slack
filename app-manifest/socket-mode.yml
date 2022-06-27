@@ -1,0 +1,26 @@
+display_information:
+  name: でんき予報
+  description: でんき予報の CSV データをキャッシュしながら表示しています
+  background_color: "#050405"
+  long_description: "でんき予報のウェブサイトは表示までに時間がかかってしまう問題が発生しているため、データ提供元に負荷をかけないように CSV を一定時間キャッシュしながら Slack 内で表示するアプリです。このアプリが表示する情報は以下の URL から取得可能な CSV データを元にしています： https://www.tepco.co.jp/forecast/html/juyo-j.html"
+features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: false
+    messages_tab_read_only_enabled: true
+  bot_user:
+    display_name: tepco-forecast
+    always_online: true
+oauth_config:
+  scopes:
+    bot:
+      - commands
+settings:
+  event_subscriptions:
+    bot_events:
+      - app_home_opened
+  interactivity:
+    is_enabled: true
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

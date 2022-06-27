@@ -6,7 +6,11 @@ from slack_sdk import WebClient
 from data_downloader import load_latest_data, Summary
 
 logging.basicConfig(level=logging.DEBUG)
-app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
+is_running_on_aws_lambda = os.environ.get("SERVERLESS_STAGE") is not None
+app = App(
+    token=os.environ.get("SLACK_BOT_TOKEN"),
+    process_before_response=is_running_on_aws_lambda,
+)
 
 
 @app.event("app_home_opened")

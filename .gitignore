@@ -1,8 +1,4 @@
 # general things to ignore
-build/
-dist/
-docs/_sources/
-docs/.doctrees
 .eggs/
 *.egg-info/
 *.egg
@@ -15,7 +11,7 @@ __pycache__/
 env*/
 venv/
 .venv*
-.env/
+#.env*
 
 # codecov / coverage
 .coverage
@@ -37,7 +33,12 @@ tmp.txt
 .DS_Store
 logs/
 
-env.example
 *.db
 
 .pytype/
+unzip_requirements.py
+.requirements.zip
+
+.serverless/
+node_modules/
+package-lock.json

@@ -18,6 +18,19 @@ python app.py
 
 For running this app in production environment, you can go with either `Dockerfile` (for any of container based runtimes) or `Procfile` (for Heroku).
 
+### Deploy to AWS Lambda
+
+If you would like to run the app on AWS Lambda, this repository has a valid servrerless settings.
+
+```bash
+npm -g install serverless
+sls plugin install -n serverless-python-requirements
+export SLACK_SIGNING_SECRET=
+# The bot token issued by the Slack workspace installation
+export SLACK_BOT_TOKEN=
+sls deploy --stage prod
+```
+
 ## License
 
 The MIT License

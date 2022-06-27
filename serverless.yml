@@ -1,0 +1,43 @@
+service: denki-yoho-for-slack
+frameworkVersion: '3'
+
+plugins:
+  - serverless-python-requirements
+
+provider:
+  name: aws
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'lambda:InvokeFunction'
+          Resource: '*'
+  runtime: python3.9
+  environment:
+    SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
+    SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
+    SERVERLESS_STAGE: ${opt:stage, 'dev'}
+
+functions:
+  slack_app:
+    handler: lambda_handler.handle
+    events:
+      - httpApi:
+          path: /slack/events
+          method: post
+
+custom:
+  pythonRequirements:
+    zip: true
+    slim: true
+
+package:
+  exclude:
+    - ".venv/**"
+    - "app-manifest/**"
+    - "node_modules/**"
+    - "pyproject.toml"
+    - "README.md"
+    - ".env*"
+    - ".idea/**"
