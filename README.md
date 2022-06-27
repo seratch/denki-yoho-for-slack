@@ -1,6 +1,6 @@
-# でんき予報 (TEPCO ELECTRICITY FORECAST) for Slack
+# でんき予報 (TEPCO Denki Yoho) for Slack
 
-This is a Slack app that enables people in Japan to more easily access the [TEPCO ELECTRICITY FORECAST](https://www.tepco.co.jp/en/forecast/html/index-e.html) website data. The website tends to take a bit long time to display data. With this Slack app, you can quickly check the data by visiting the app's Home tab.
+This is a Slack app that enables people in Japan to check the [TEPCO ELECTRICITY FORECAST](https://www.tepco.co.jp/en/forecast/html/index-e.html) website data in Slack. With this Slack app, you can quickly check the data by visiting the app's Home tab.
 
 <img width="600" src="https://user-images.githubusercontent.com/19658/175895759-0d62666f-8523-454d-9717-a0a2ef6c93be.png">
 
