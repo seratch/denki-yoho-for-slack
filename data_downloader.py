@@ -28,9 +28,9 @@ def fetch_latest_data() -> Summary:
     response.encoding = "Shift_JIS"
     text = response.text
     lines = text.split("\r\n")
-    last_updated_at_string = lines[0].replace(" UPDATE", " JST")
+    last_updated_at_string = lines[0].replace(" UPDATE", " +0900")
     last_updated_at = datetime.datetime.strptime(
-        last_updated_at_string, "%Y/%m/%d %H:%M %Z"
+        last_updated_at_string, "%Y/%m/%d %H:%M %z"
     )
     peak_demand_line_values = lines[2].split(",")
     peak_usage_line_values = lines[8].split(",")

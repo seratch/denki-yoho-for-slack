@@ -1,13 +1,11 @@
 import logging
 import os
-from slack_bolt import App, BoltContext
+from slack_bolt import App, BoltContext, Ack
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from slack_sdk import WebClient
-
 from data_downloader import load_latest_data, Summary
 
 logging.basicConfig(level=logging.DEBUG)
-
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 
@@ -54,9 +52,24 @@ def update_home_tab(context: BoltContext, client: WebClient):
                         f"*{summary.peak_usage.percentage}%*",
                     },
                 },
+                {"type": "divider"},
+                {
+                    "type": "context",
+                    "elements": [
+                        {
+                            "type": "plain_text",
+                            "text": f"最終更新日時: {summary.last_updated_at}",
+                        }
+                    ],
+                },
             ],
         },
     )
+
+
+@app.action("button-action")
+def handle_some_action(ack: Ack):
+    ack()
 
 
 if __name__ == "__main__":
