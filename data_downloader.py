@@ -1,6 +1,6 @@
 import datetime
 from dataclasses import dataclass
-from typing import Optional, Sequence
+from typing import Optional
 
 import requests
 
@@ -37,7 +37,7 @@ def fetch_latest_data() -> Summary:
     )
     demand_peak_line_values = lines[2].split(",")
     usage_peak_line_values = lines[8].split(",")
-    current: Optional[Usage] = None
+    current: Usage = Usage(time="-", percentage=0)
     for i in range(14, 28):
         line_values = lines[i].split(",")
         if len(line_values[4]) == 0:
