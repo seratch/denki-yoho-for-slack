@@ -23,17 +23,20 @@ def update_home_tab(context: BoltContext, client: WebClient):
             "blocks": [
                 {
                     "type": "header",
-                    "text": {"type": "plain_text", "text": "でんき予報の簡易版"},
+                    "text": {
+                        "type": "plain_text",
+                        "text": ":high_brightness: でんき予報（簡易版） :high_brightness:",
+                    },
                 },
                 {
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": ":wave: でんき予報の CSV データを取得して表示しています。Slack を使っていてちょっと確認したいときや PC のウェブサイトにアクセスしづらいときなどに便利です。",
+                        "text": ":page_facing_up: でんき予報の CSV データを取得して表示しています",
                     },
                     "accessory": {
                         "type": "button",
-                        "text": {"type": "plain_text", "text": "でんき予報のウェブサイト"},
+                        "text": {"type": "plain_text", "text": "でんき予報"},
                         "value": "clicked",
                         "url": "https://www.tepco.co.jp/forecast/",
                         "action_id": "button-action",
@@ -44,16 +47,24 @@ def update_home_tab(context: BoltContext, client: WebClient):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": f"需要ピーク時 ({summary.peak_demand.time}): "
-                        f"*{summary.peak_demand.percentage}%*",
+                        "text": f":flashlight: 最新の状況 ({summary.current.time}): "
+                        f"*{summary.current.percentage}%*",
                     },
                 },
                 {
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": f"使用率ピーク時 ({summary.peak_usage.time}): "
-                        f"*{summary.peak_usage.percentage}%*",
+                        "text": f":pray: 需要ピーク時 ({summary.demand_peak.time}): "
+                        f"*{summary.demand_peak.percentage}%*",
+                    },
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f":hand: 使用率ピーク時 ({summary.usage_peak.time}): "
+                        f"*{summary.usage_peak.percentage}%*",
                     },
                 },
                 {"type": "divider"},
@@ -62,8 +73,9 @@ def update_home_tab(context: BoltContext, client: WebClient):
                     "elements": [
                         {
                             "type": "plain_text",
-                            "text": f"最終更新日時: {summary.last_updated_at}",
-                        }
+                            "text": "※ このアプリは Slack 内でちょっと確認したいときや PC サイトにアクセスしづらいときなどに便利です"
+                            f"\n最終更新日時: {summary.last_updated_at}",
+                        },
                     ],
                 },
             ],

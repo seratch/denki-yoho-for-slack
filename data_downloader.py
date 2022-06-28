@@ -1,12 +1,12 @@
 import datetime
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Sequence
 
 import requests
 
 
 @dataclass
-class Peak:
+class Usage:
     time: str
     percentage: float
 
@@ -14,8 +14,9 @@ class Peak:
 @dataclass
 class Summary:
     last_updated_at: datetime.datetime
-    peak_demand: Peak
-    peak_usage: Peak
+    demand_peak: Usage
+    usage_peak: Usage
+    current: Usage
 
 
 CSV_DATA_URL = "https://www.tepco.co.jp/forecast/html/images/juyo-d1-j.csv"
@@ -34,17 +35,27 @@ def fetch_latest_data() -> Summary:
     last_updated_at = datetime.datetime.strptime(
         last_updated_at_string, "%Y/%m/%d %H:%M %z"
     )
-    peak_demand_line_values = lines[2].split(",")
-    peak_usage_line_values = lines[8].split(",")
+    demand_peak_line_values = lines[2].split(",")
+    usage_peak_line_values = lines[8].split(",")
+    current: Optional[Usage] = None
+    for i in range(14, 28):
+        line_values = lines[i].split(",")
+        if len(line_values[4]) == 0:
+            break
+        hour = int(line_values[1].split(":")[0])
+        time = line_values[1] + "〜" + str(hour + 1) + ":00"
+        current = Usage(time=time, percentage=float(line_values[4]))
+
     latest = Summary(
         last_updated_at=last_updated_at,
-        peak_demand=Peak(
-            time=peak_demand_line_values[1],
-            percentage=float(peak_demand_line_values[5]),
+        demand_peak=Usage(
+            time=demand_peak_line_values[1],
+            percentage=float(demand_peak_line_values[5]),
         ),
-        peak_usage=Peak(
-            time=peak_usage_line_values[1], percentage=float(peak_usage_line_values[5])
+        usage_peak=Usage(
+            time=usage_peak_line_values[1], percentage=float(usage_peak_line_values[5])
         ),
+        current=current,
     )
     global CACHED_DATA
     CACHED_DATA = latest
