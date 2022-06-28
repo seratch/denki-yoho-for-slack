@@ -6,13 +6,13 @@ except ImportError:
 
 import logging
 from slack_bolt.adapter.aws_lambda import SlackRequestHandler
-from app import app
-
-
-slack_handler = SlackRequestHandler(app=app)
 
 SlackRequestHandler.clear_all_log_handlers()
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.DEBUG)
+
+from app import app
+
+slack_handler = SlackRequestHandler(app=app)
 
 
 def handle(event, context):

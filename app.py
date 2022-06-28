@@ -29,7 +29,7 @@ def update_home_tab(context: BoltContext, client: WebClient):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "CSV データを一定時間キャッシュして表示しています :wave:",
+                        "text": ":wave: でんき予報の CSV データを取得して表示しています。Slack を使っていてちょっと確認したいときや PC のウェブサイトにアクセスしづらいときなどに便利です。",
                     },
                     "accessory": {
                         "type": "button",
