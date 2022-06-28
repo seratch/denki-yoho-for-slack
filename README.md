@@ -2,7 +2,7 @@
 
 This is a Slack app that enables people in Japan to check the [TEPCO ELECTRICITY FORECAST](https://www.tepco.co.jp/en/forecast/html/index-e.html) website data in Slack. With this Slack app, you can quickly check the data by visiting the app's Home tab.
 
-<img width="600" src="https://user-images.githubusercontent.com/19658/176103725-3e251c1e-8d05-4802-b490-4e44cb05970b.png">
+<img width="600" src="https://user-images.githubusercontent.com/19658/176103966-94888e67-c491-41af-932c-374b9c4aec9a.png">
 
 ## How to run this app
 
