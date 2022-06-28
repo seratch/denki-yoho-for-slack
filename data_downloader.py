@@ -38,7 +38,7 @@ def fetch_latest_data() -> Summary:
     demand_peak_line_values = lines[2].split(",")
     usage_peak_line_values = lines[8].split(",")
     current: Usage = Usage(time="-", percentage=0)
-    for i in range(14, 28):
+    for i in range(14, 38):
         line_values = lines[i].split(",")
         if len(line_values[4]) == 0:
             break
