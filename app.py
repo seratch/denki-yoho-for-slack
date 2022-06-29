@@ -13,7 +13,6 @@ app = App(
 )
 
 
-@app.event("app_home_opened")
 def update_home_tab(context: BoltContext, client: WebClient):
     summary: Summary = load_latest_data()
     client.views_publish(
@@ -32,14 +31,14 @@ def update_home_tab(context: BoltContext, client: WebClient):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": ":page_facing_up: でんき予報の CSV データを取得して表示しています",
+                        "text": ":page_facing_up: <https://www.tepco.co.jp/forecast/|でんき予報>の"
+                        " <https://www.tepco.co.jp/forecast/html/juyo-j.html|CSV データ>を取得して表示しています。",
                     },
                     "accessory": {
                         "type": "button",
-                        "text": {"type": "plain_text", "text": "でんき予報"},
+                        "text": {"type": "plain_text", "text": "更新 :repeat:"},
                         "value": "clicked",
-                        "url": "https://www.tepco.co.jp/forecast/",
-                        "action_id": "button-action",
+                        "action_id": "reload",
                     },
                 },
                 {"type": "divider"},
@@ -83,9 +82,15 @@ def update_home_tab(context: BoltContext, client: WebClient):
     )
 
 
-@app.action("button-action")
-def handle_some_action(ack: Ack):
+@app.action("reload")
+def reload_home_tab(ack: Ack, context: BoltContext, client: WebClient):
     ack()
+    update_home_tab(context, client)
+
+
+@app.event("app_home_opened")
+def display_home_tab(context: BoltContext, client: WebClient):
+    update_home_tab(context, client)
 
 
 if __name__ == "__main__":
