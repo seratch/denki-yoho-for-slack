@@ -42,3 +42,5 @@ unzip_requirements.py
 .serverless/
 node_modules/
 package-lock.json
+
+.env*

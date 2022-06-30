@@ -15,69 +15,86 @@ app = App(
 
 def update_home_tab(context: BoltContext, client: WebClient):
     summary: Summary = load_latest_data()
+    blocks = [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": ":high_brightness: でんき予報（簡易版） :high_brightness:",
+            },
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": ":page_facing_up: <https://www.tepco.co.jp/forecast/|でんき予報>の"
+                " <https://www.tepco.co.jp/forecast/html/juyo-j.html|CSV データ>を取得して表示しています。",
+            },
+            "accessory": {
+                "type": "button",
+                "text": {"type": "plain_text", "text": "更新 :repeat:"},
+                "value": "clicked",
+                "action_id": "reload",
+            },
+        },
+    ]
+    if summary.weather is not None:
+        blocks.append(
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": ":sunny: "
+                    f"気温: *{summary.weather.temperature}℃* "
+                    f"| 体感: {summary.weather.feels_like}℃ "
+                    f"| 湿度: {summary.weather.humidity}",
+                },
+            }
+        )
+    blocks = blocks + [
+        {"type": "divider"},
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f":flashlight: 最新の状況 ({summary.current_usage.time}): "
+                f"*{summary.current_usage.percentage}%*",
+            },
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f":pray: 需要ピーク時 ({summary.demand_peak_usage.time}): "
+                f"*{summary.demand_peak_usage.percentage}%*",
+            },
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f":hand: 使用率ピーク時 ({summary.usage_peak_usage.time}): "
+                f"*{summary.usage_peak_usage.percentage}%*",
+            },
+        },
+        {"type": "divider"},
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "plain_text",
+                    "text": "※ このアプリは Slack 内でちょっと確認したいときや PC サイトにアクセスしづらいときなどに便利です"
+                    f"\n最終更新日時: {summary.last_updated_at}",
+                },
+            ],
+        },
+    ]
+
     client.views_publish(
         user_id=context.user_id,
         view={
             "type": "home",
-            "blocks": [
-                {
-                    "type": "header",
-                    "text": {
-                        "type": "plain_text",
-                        "text": ":high_brightness: でんき予報（簡易版） :high_brightness:",
-                    },
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": ":page_facing_up: <https://www.tepco.co.jp/forecast/|でんき予報>の"
-                        " <https://www.tepco.co.jp/forecast/html/juyo-j.html|CSV データ>を取得して表示しています。",
-                    },
-                    "accessory": {
-                        "type": "button",
-                        "text": {"type": "plain_text", "text": "更新 :repeat:"},
-                        "value": "clicked",
-                        "action_id": "reload",
-                    },
-                },
-                {"type": "divider"},
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": f":flashlight: 最新の状況 ({summary.current.time}): "
-                        f"*{summary.current.percentage}%*",
-                    },
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": f":pray: 需要ピーク時 ({summary.demand_peak.time}): "
-                        f"*{summary.demand_peak.percentage}%*",
-                    },
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": f":hand: 使用率ピーク時 ({summary.usage_peak.time}): "
-                        f"*{summary.usage_peak.percentage}%*",
-                    },
-                },
-                {"type": "divider"},
-                {
-                    "type": "context",
-                    "elements": [
-                        {
-                            "type": "plain_text",
-                            "text": "※ このアプリは Slack 内でちょっと確認したいときや PC サイトにアクセスしづらいときなどに便利です"
-                            f"\n最終更新日時: {summary.last_updated_at}",
-                        },
-                    ],
-                },
-            ],
+            "blocks": blocks,
         },
     )
 

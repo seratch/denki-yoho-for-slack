@@ -17,6 +17,7 @@ provider:
   environment:
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
+    OPEN_WEATHER_MAP_API_KEY: ${env:OPEN_WEATHER_MAP_API_KEY}
     SERVERLESS_STAGE: ${opt:stage, 'dev'}
 
 functions:
