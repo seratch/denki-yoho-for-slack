@@ -34,8 +34,8 @@ OPEN_WEATHER_MAP_API_KEY = os.environ.get("OPEN_WEATHER_MAP_API_KEY")
 if OPEN_WEATHER_MAP_API_KEY is not None:
     WEATHER_URL = (
         "https://api.openweathermap.org/data/2.5/weather?"
-        "lat=35.6828387&"
-        "lon=139.7594549&"
+        "lat=35.6853482&"
+        "lon=139.7457665&"
         "units=metric&"
         f"appid={OPEN_WEATHER_MAP_API_KEY}"
     )
