@@ -23,12 +23,20 @@ For running this app in production environment, you can go with either `Dockerfi
 If you would like to run the app on AWS Lambda, this repository has a valid servrerless settings.
 
 ```bash
-npm -g install serverless
-sls plugin install -n serverless-python-requirements
+npm i
 export SLACK_SIGNING_SECRET=
 # The bot token issued by the Slack workspace installation
 export SLACK_BOT_TOKEN=
-sls deploy --stage prod
+npx sls deploy --stage prod
+```
+
+If you have some issues related to the Python depdendencies resolution, running the following before deployment command may help.
+
+```bash
+# for macOS
+rm -rf ${HOME}/Library/Caches/serverless-python-requirements/
+rm -f .requirements.zip && rm -rf .serverless/requirements
+npx sls deploy --stage prod
 ```
 
 ## License

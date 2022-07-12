@@ -34,11 +34,11 @@ custom:
     slim: true
 
 package:
-  exclude:
-    - ".venv/**"
-    - "app-manifest/**"
-    - "node_modules/**"
-    - "pyproject.toml"
-    - "README.md"
-    - ".env*"
-    - ".idea/**"
+  patterns:
+    - "!.venv/**"
+    - "!app-manifest/**"
+    - "!node_modules/**"
+    - "!pyproject.toml"
+    - "!README.md"
+    - "!.env*"
+    - "!.idea/**"

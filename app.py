@@ -99,15 +99,16 @@ def update_home_tab(context: BoltContext, client: WebClient):
     )
 
 
-@app.action("reload")
-def reload_home_tab(ack: Ack, context: BoltContext, client: WebClient):
+def just_ack(ack: Ack):
     ack()
-    update_home_tab(context, client)
 
 
-@app.event("app_home_opened")
-def display_home_tab(context: BoltContext, client: WebClient):
-    update_home_tab(context, client)
+def just_ack_events():
+    pass
+
+
+app.action("reload")(ack=just_ack, lazy=[update_home_tab])
+app.event("app_home_opened")(ack=just_ack_events, lazy=[update_home_tab])
 
 
 if __name__ == "__main__":
